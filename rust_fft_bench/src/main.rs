@@ -51,6 +51,7 @@ struct Args {
 
 #[derive(Serialize)]
 struct ResultFile {
+    name: String,
     threads: usize,
     plan_type: PlanType,
     plan_size: usize,
@@ -62,6 +63,7 @@ struct ResultFile {
 impl ResultFile {
     pub fn from_args(args: &Args) -> Self {
         Self {
+            name: "rust_fft_bench".to_string(),
             threads: args.threads,
             plan_type: args.plan_type,
             plan_size: args.plan_size,
