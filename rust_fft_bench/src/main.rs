@@ -129,13 +129,13 @@ fn main() {
     println!("FFT_BENCH: Create Initial Conditions");
     let mut rng = rand::rng();
     let dist = Uniform::new(-1.0, 1.0).unwrap();
-    let mut sum = 0.0;
+    let mut initial_sum = 0.0;
     for i in 0..args.plan_size {
         let value = rng.sample(dist);
-        sum += value;
+        initial_sum += value;
         real_buffer[i] = value;
     }
-    println!("FFT_BENCH: IC Sum {}", sum);
+    println!("FFT_BENCH: Initial Sum {}", initial_sum);
 
     println!("FFT_BENCH: Create FFT Plans");
     fftw::threading::plan_with_nthreads_f64(args.threads);
@@ -143,7 +143,7 @@ fn main() {
         fftw::plan::R2CPlan64::aligned(&[args.plan_size], args.plan_type.to_fftw3_flag()).unwrap();
     let backward_plan =
         fftw::plan::C2RPlan64::aligned(&[args.plan_size], args.plan_type.to_fftw3_flag()).unwrap();
-
+    let n_r = args.plan_size as f64;
     for test in 0..args.test_count {
         let start_time = Instant::now();
 
@@ -157,12 +157,18 @@ fn main() {
         let end_time = Instant::now();
         let duration = (end_time - start_time).as_nanos();
         results.timings.push(duration);
+
         println!("FFT_BENCH: test {}, duration {} ns", test, duration);
+
+        // Normalize data
+        real_buffer.iter_mut().for_each(|value| *value /= n_r);
     }
 
     // New sum?
     let final_sum: f64 = real_buffer.iter().sum();
-    println!("FFT_BENCH: final sum {}", final_sum);
+    println!("FFT_BENCH: Final Sum {}", final_sum);
+    let sum_drift = final_sum - initial_sum;
+    println!("FFT_BENCH: Sum Drift: {}", sum_drift);
 
     // Write output
     println!("FFT_BENCH: Writing Output");
@@ -173,5 +179,5 @@ fn main() {
     println!("FFT_BENCH: Writing wisdom");
     fftw::wisdom::export_wisdom_file_f64(&args.wisdom_path).unwrap();
 
-    println!("FFT_BNECH: End");
+    println!("FFT_BENCH: End");
 }
