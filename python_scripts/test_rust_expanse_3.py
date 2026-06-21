@@ -1,18 +1,18 @@
 import param_sweep
 import os
 
-exec_path = "/home/rbentley/fft_bench/rust_fft_bench/target/release/rust_fft_bench"
+rust_exec_path = "/home/rbentley/fft_bench/rust_fft_bench/target/release/rust_fft_bench"
 cpp_exec_path = "/home/rbentley/fft_bench/cpp_fft_bench/cpp_fft_bench"
 results_dir = "/home/rbentley/fft_bench/results/expanse_3"
 sweep_config = {
     "cli": {
         "threads": [1],
-        "plan_size": [i for i in range(1000, 14000)],
+        "plan_size": [i for i in range(1000, 14000)] + [14040],
         "plan_type": ["estimate", "measure"],
         "test_count": [12],
     },
     "tool": {
-        "tool": ["cpp", "rust"]
+        "tool": ["rust"]
     }
 }
 
@@ -45,7 +45,7 @@ def run_rust_params(params):
         print(f"LOG: Already exists: {output_path}")
         return;
 
-    command = f"{cpp_exec_path}"
+    command = f"{rust_exec_path}"
     command += f" --plan-size {plan_size}"
     command += f" --plan-type {plan_type}"
     command += f" --threads {threads}"
