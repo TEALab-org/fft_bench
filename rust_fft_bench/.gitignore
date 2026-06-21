@@ -7,6 +7,9 @@
 # Profiling
 *.prof
 
+# python
+__pycache__
+
 # Misc stuff
 *.wisdom
 *.png
