@@ -1,0 +1,22 @@
+{
+  "name": "rust_fft_bench",
+  "threads": 1,
+  "plan_type": "Estimate",
+  "plan_size": 11838,
+  "git_describe": "",
+  "git_hash": "cabb6d69b2ba8ce53914950a9051ddd10be5f753",
+  "timings": [
+    663919,
+    653499,
+    657988,
+    655984,
+    653129,
+    656625,
+    658709,
+    651947,
+    656265,
+    660793,
+    652487,
+    655483
+  ]
+}
