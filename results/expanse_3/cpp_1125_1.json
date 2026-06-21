@@ -1,0 +1,20 @@
+{
+  "name": "cpp_mkl_fft_bench",
+  "threads": 1,
+  "plan_type": "MKL_OUT_OF_PLACE",
+  "plan_size": 1125,
+  "timings": [
+    48722,
+    9568,
+    9318,
+    14377,
+    9297,
+    9258,
+    9267,
+    9248,
+    9277,
+    9297,
+    9297,
+    9297
+  ]
+}
