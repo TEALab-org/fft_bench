@@ -7,12 +7,12 @@ results_dir = "/home/rbentley/fft_bench/results/expanse_3"
 sweep_config = {
     "cli": {
         "threads": [1],
-        "plan_size": [i for i in range(1000, 14000)] + [14040],
+        "plan_size": [i for i in range(1000, 14001)] + [14040],
         "plan_type": ["estimate", "measure"],
         "test_count": [12],
     },
     "tool": {
-        "tool": ["rust"]
+        "tool": ["cpp", "rust"]
     }
 }
 
